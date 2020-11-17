@@ -1,19 +1,50 @@
 #include <iostream>
-#define CPP2_PRIME_UPPER_LIMIT 1000000 //探索する値の上限値。
-/* --------------------------------------------------------------- */
-/*
-* nth_prime
-*
-* 与えられた正整数 a と d と n に対して、この等差数列に含まれる n 番目の
-* 素数を返す。
-*
-* TODO: この nth_prime 関数を実装せよ。必要であれば他に関数や
-* ファイルを作成せよ。
-*/
-/* -------------------------------------------------------------- */
-int nth_prime(unsigned int a, unsigned int d, unsigned int n);
+using namespace std;
+#define CPP2_PRIME_UPPER_LIMIT 1000000
+#define PrimeNumMAX 168
+int primeNum[PrimeNumMAX] = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101, 103, 107,109,113,127,131,137,139,149,151,  //素数表
+157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293,307,311,313,317,331,337,347,
+349,353,359,367,373,379,383,389,397,401,409,419,421,431,433,439,443,449,457,461,463,467,479,487,491,499,503,509,521,523,541,547,557,
+563,569,571,577,587,593,599,601,607,613,617,619,631,641,643,647,653,659,661,673,677,683,691,701,709,719,727,733,739,743,751,757,761,
+769,773,787,797,809,811,821,823,827,829,839,853,857,859,863,877,881,883,887, 907,911,919,929,937,941,947,953,967,971,977,983,991,997
+};
+
+//int numが素数かどうか確認する
+int checkPrime(int num) {
+    if (num <= 1)return 0;                                                                              //nが1の時は素数ではない
+    for (int counter = 0; counter < PrimeNumMAX; counter++) {
+        if (num == primeNum[counter])return 1;                                              //nが素数リストの数字と同じなら素数
+        if (num % primeNum[counter] == 0)return 0;                                       //nが素数リストの数字ではなく、"素数リスト[counter]"で割り切れるなら素数ではない
+        if (num < (primeNum[counter + 1] * primeNum[counter + 1]))return 1;//nが"nの平方根＜素数リスト[counter+1]"まで割り切れることが無ければ素数
+    }                                                                                                             //すべての条件に当てはまらない場合、次の素数で算出を試みる
+}
+
+int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
+    int currentPrime = 0;
+    for (int currentNum = 0; a + d * (currentNum + 1) <= CPP2_PRIME_UPPER_LIMIT; currentNum++) {
+        if (checkPrime(a+d*currentNum)==1) {
+            currentPrime += 1;
+            if (currentPrime == n)return a+d*currentNum;
+        }
+    }
+    cout << "error:Upper limit of prime number is 1000000. "<<endl << n << "th prime number is not exist in range from up to 1000000." << endl;//範囲外エラー
+    return -1;
+}
+
+
 int main() {
-    std::cout << nth_prime(367, 186, 151) << std::endl;
-    // 以下、同様に、入出力例通りになるか確認せよ。
-    return 0;
+ cout << nth_prime(367, 186, 151) << endl;
+    cout << nth_prime(179, 10, 203) << endl;
+    cout << nth_prime(271, 37, 39) << endl;
+    cout << nth_prime(103, 230, 1) << endl;
+    cout << nth_prime(27, 104, 185) << endl;
+    cout << nth_prime(253, 50, 85) << endl;
+    cout << nth_prime(1, 1, 1) << endl;
+    cout << nth_prime(9075, 337, 210) << endl;
+    cout << nth_prime(307, 24, 79) << endl;
+    cout << nth_prime(331, 221, 177) << endl;
+    cout << nth_prime(259, 170, 40) << endl;
+    cout << nth_prime(269, 58, 102) << endl;
+
+return 0;
 }
