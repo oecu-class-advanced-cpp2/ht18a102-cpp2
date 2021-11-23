@@ -8,13 +8,26 @@ namespace cpp2 {
     */
     /* --------------------------------------------------------------------- */
     class mcxi {
-        void mcxi(){
-            break;
-        }
-
-
+    public:
+        int value;                                  // 数値
+        mcxi(const std::string& s);     // コンストラクタ
+        std::string to_string();                                  // 文字列変換
     };
-} // namespace cpp2
+
+    mcxi::mcxi(const std::string& s) {
+    }
+    std::string mcxi::to_string(){
+        std::string result ="";
+        return result;
+    }
+
+    // 足し算の定義
+    mcxi operator+ (mcxi a, mcxi b)
+    {
+        mcxi result("");
+        return result;
+    }
+};
 
 int main() {
     cpp2::mcxi a0("xi");
