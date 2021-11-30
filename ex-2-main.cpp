@@ -4,24 +4,25 @@ namespace cpp2 {
     /* --------------------------------------------------------------------- */
     /*
     mcxi
-    mcxi ‹L–@‚ð‰ðÍ‚·‚éƒNƒ‰ƒX‚Å‚·B
+    mcxi è¨˜æ³•ã‚’è§£æžã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
     */
     /* --------------------------------------------------------------------- */
     class mcxi {
     public:
-        int value;                                  // ”’l
-        mcxi(const std::string& s);     // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-        std::string to_string();                                  // •¶Žš—ñ•ÏŠ·
+        int value;                                  // æ•°å€¤
+        mcxi(const std::string& s);     // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+        std::string to_string();                                  // æ–‡å­—åˆ—å¤‰æ›
     };
 
     mcxi::mcxi(const std::string& s) {
     }
+    
     std::string mcxi::to_string(){
         std::string result ="";
         return result;
     }
 
-    // ‘«‚µŽZ‚Ì’è‹`
+    // è¶³ã—ç®—ã®å®šç¾©
     mcxi operator+ (mcxi a, mcxi b)
     {
         mcxi result("");
