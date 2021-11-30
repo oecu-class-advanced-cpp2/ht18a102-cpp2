@@ -2,7 +2,7 @@
 #define CPP2_PRIME_UPPER_LIMIT 1000000
 #define PrimeNumMAX 168
 
-//CPP2_PRIME_UPPER_LIMIT 1000000�̔���ɕK�v�ȑf���̃��X�g
+//CPP2_PRIME_UPPER_LIMIT 1000000の判定に必要な素数のリスト
 int primeNum[PrimeNumMAX] =
 {
 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
@@ -25,30 +25,30 @@ int primeNum[PrimeNumMAX] =
 947,953, 967, 971, 977, 983, 991, 997
 };
 
-//�f���𔻒肷��
-//int num=�`�F�b�N���鐔��
-//�f���Ȃ�1��Ԃ�
+//素数を判定する
+//int num=チェックする数字
+//素数なら1を返す
 /*
-num��1�ȊO���A���炩���ߗp�ӂ����f�����X�g�ɑ��݂��Ă��Ȃ��ꍇ�Anum��f���Ŋ����Ă����B�����ꂩ�̑f���Ŋ���؂ꂽ�ꍇ�͑f���ł͂Ȃ�
+numが1以外かつ、あらかじめ用意した素数リストに存在していない場合、numを素数で割っていく。いずれかの素数で割り切れた場合は素数ではない
 */
 int is_Prime(int num) {
-    //1�Ȃ�Αf���ł͂Ȃ�
+    //1ならば素数ではない
     if (num <= 1)return 0;
     for (int counter = 0; counter < PrimeNumMAX; counter++) {
 
-        //�f�����X�g��num������Αf��
+        //素数リストにnumがあれば素数
         if (num == primeNum[counter])return 1;
 
-        //�f�����X�g�̐�����num������؂��Αf���ł͂Ȃ�
+        //素数リストの数字でnumが割り切れれば素数ではない
         if (num % primeNum[counter] == 0)return 0;
 
-        //�m�F��num�����Ɋm�F����f����2���菬�������܂łł悢�i�����܂łɊ���؂�Ȃ��ꍇ�f���j
+        //確認はnumが次に確認する素数の2乗より小さい所まででよい（ここまでに割り切れない場合素数）
         if (num < (primeNum[counter+1] * primeNum[counter+1]))return 1;
     }
 }
 
-//�f�B���N���̎Z�p�����藝
-//a ����n�܂� d �������铙�������n�Ԗڂ̑f����Ԃ�
+//ディリクレの算術級数定理
+//a から始まり d ずつ増える等差数列のn番目の素数を返す
 int nth_prime(int a, int d,int n) {
     int currentPrime = 0;
     for (int currentNum = 0; a + d * (currentNum + 1) <= CPP2_PRIME_UPPER_LIMIT;currentNum++) {
@@ -58,7 +58,7 @@ int nth_prime(int a, int d,int n) {
         }
     }
 
-    //�G���[
+    //エラー
     std::cout << "error:Upper limit of prime number is 1000000. " << std::endl;
     return -1;
 }
