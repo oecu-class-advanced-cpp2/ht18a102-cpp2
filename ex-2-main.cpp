@@ -17,6 +17,8 @@ namespace cpp2 {
             case 'x':return 10;
             case 'i':return 1;
             }
+            //発展課題
+            std::cout << "error:mcxi文字列ではm,c,x,iの4文字が使用できます。"<<c <<"は無効な文字です。"<< std::endl;
             return -1;
         }
     public:
@@ -32,11 +34,24 @@ namespace cpp2 {
         int num = 0;
         for (auto pos = s.begin(); pos != s.end(); ++pos) {
             // posが数字のとき
-            if (*pos>='2'&&*pos<='9') {
+            if (*pos >= '2' && *pos <= '9') {
+
+                //発展課題
+                if (num != 0) {
+                    std::cout << "error:mcxi文字列では数字は連続して続きません" << std::endl;
+                    return;
+                }
+
                 num = *pos - '0';
+                // posが文字のとき
             }
-            // posが文字のとき
-            else{
+
+            //発展課題
+            else if (*pos == '1'){
+                std::cout << "error:mcxi文字列では1は使用しません（省略します）" << std::endl;
+                return;
+            
+            }else {
                 int u = unit(*pos);
                 if (num == 0)num = 1;
                 value_ += num * u;
