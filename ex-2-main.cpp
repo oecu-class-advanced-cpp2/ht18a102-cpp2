@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include<sstream>
 namespace cpp2 {
     /* --------------------------------------------------------------------- */
     /*
@@ -8,25 +9,104 @@ namespace cpp2 {
     */
     /* --------------------------------------------------------------------- */
     class mcxi {
+    private:
+        int unit(char c) {
+            switch (c) {
+            case 'm':return 1000;
+            case 'c':return 100;
+            case 'x':return 10;
+            case 'i':return 1;
+            }
+            return -1;
+        }
     public:
-        int value;                                  // 数値
-        mcxi(const std::string& s);     // コンストラクタ
-        std::string to_string();                                  // 文字列変換
+        int value_;
+        mcxi(const std::string& s);      // コンストラクタ
+        std::string to_string();            // mcxiをintに
     };
 
-    mcxi::mcxi(const std::string& s) {
+
+
+    // コンストラクタ
+    mcxi::mcxi(const std::string& s) :value_(0){
+        int num = 0;
+        for (auto pos = s.begin(); pos != s.end(); ++pos) {
+            // posが数字のとき
+            if (*pos>='2'&&*pos<='9') {
+                num = *pos - '0';
+            }
+            // posが文字のとき
+            else{
+                int u = unit(*pos);
+                if (num == 0)num = 1;
+                value_ += num * u;
+                num = 0;
+            }
+        }
+       // std::cout << "(debug):value is :" << value_ << std::endl;
     }
+
+    // intをmcxiに
     std::string mcxi::to_string(){
-        std::string result ="";
-        return result;
+        {
+            std::stringstream ss;
+            int q = 0;
+
+            // 1文字目(i)
+            q = value_ % 10;
+            if (q == 1) {
+                ss << 'i';
+            }
+            if (q > 1) {
+                ss << q;
+                ss << 'm';
+            }
+
+            // 2文字目(x)
+            q = (value_ / 10) % 10;
+            if (q == 1) {
+                ss << 'x';
+            }
+            if (q > 1) {
+                ss << q;
+                ss << 'x';
+            }
+
+            // 3文字目(c)
+            q = (value_ / 100) % 10;
+            if (q == 1) {
+                ss << 'c';
+            }
+            if (q > 1) {
+                ss << q;
+                ss << 'c';
+            }
+
+            // 4文字目(m)
+            q = value_ / 1000;
+            if (q == 1) {
+                ss << 'm';
+            }
+            if (q > 1) {
+                ss << q;
+                ss << 'i';
+            }
+
+            return ss.str();
+        }
     }
 
     // 足し算の定義
+    // int型の答えを返す
     mcxi operator+ (mcxi a, mcxi b)
     {
+        //std::cout << "(debug):value mcxi.a :" << a.value_ << std::endl;
+        //std::cout << "(debug):value mcxi.a :" << b.value_ << std::endl;
         mcxi result("");
+        result.value_ = a.value_ + b.value_;
         return result;
     }
+
 };
 
 int main() {
